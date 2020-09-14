@@ -3,7 +3,7 @@ on:
   schedule:
     # * is a special character in YAML so you have to quote this string
     # UTC 17:00 -> CST (China) 1:00, see https://datetime360.com/cn/utc-cst-china-time/
-    - cron: '	20/3 * * * *'
+    - cron: '	20/3 * * *'
 name: sync2gitee
 jobs:
   run:
@@ -15,7 +15,7 @@ jobs:
 
     - name: git info
       env: 
-        GITHUB_INFO: ${{ github }}
+        GITHUB_INFO: ${{ toJson(github) }}
       run: |
         echo $GITHUB_INFO
 
