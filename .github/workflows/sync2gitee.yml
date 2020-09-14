@@ -16,9 +16,9 @@ jobs:
     - name: git current repository name
       id: info
       env: 
-        GITHUB_INFO: ${{ github.repository }}
+        GITHUB_REPO: ${{ github.repository }}
       run: |
-        echo "::set-output name=repoName::$($GITHUB_INFO##*/)"
+        echo "::set-output name=repoName::$(echo ${GITHUB_REPO##*/})"
 
     - name: Cache src repos
       uses: actions/cache@v2.1.1
