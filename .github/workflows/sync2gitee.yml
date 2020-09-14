@@ -13,18 +13,19 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v2.3.2
 
-    - name: git info
+    - name: git current repository name
+      id: info
       env: 
-        GITHUB_INFO: ${{ toJson(github) }}
+        GITHUB_INFO: ${{ github.repository }}
       run: |
-        echo $GITHUB_INFO
+        echo "::set-output name=repoName::$($GITHUB_INFO##*/)"
 
     - name: Cache src repos
       uses: actions/cache@v2.1.1
       id: cache
       with:
         path: ${{ github.workspace }}/hub-mirror-cache
-        key: ${{ runner.os }}-${{ github.repository_owner }}-${{ github.event.repository.name }}-cache
+        key: ${{ runner.os }}-${{ github.repository_owner }}-${{ steps.info.outputs.repoName }}-cache
 
     - name: Print the cache status
       if: steps.cache.outputs.cache-hit == 'true'
@@ -40,7 +41,7 @@ jobs:
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
         cache_path: /github/workspace/hub-mirror-cache
-        static_list: ${{ github.event.repository.name }}
+        static_list: ${{ steps.info.outputs.repoName }}
         force_update: true
     - name: Print cache path
       run: |
