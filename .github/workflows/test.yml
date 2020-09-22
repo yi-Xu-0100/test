@@ -15,7 +15,8 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const views = await github.repos.getViews({
+          const octokit = new getOctokit(github-token)
+          const views = await octokit.repos.getViews({
               owner: context.repo.owner,
               repo: context.repo.repo,
           });
@@ -31,7 +32,8 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const topreferrers = await github.repos.getTopReferrers({
+          const octokit = new getOctokit(github-token)
+          const topreferrers = await octokit.repos.getTopReferrers({
               owner: context.repo.owner,
               repo: context.repo.repo,
           });
@@ -46,7 +48,8 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const toppaths = await github.repos.getTopPaths({
+          const octokit = new getOctokit(github-token)
+          const toppaths = await octokit.repos.getTopPaths({
               owner: context.repo.owner,
               repo: context.repo.repo,
           });
@@ -61,7 +64,8 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const clones = await github.repos.getClones({
+          const octokit = new getOctokit(github-token)
+          const clones = await octokit.repos.getClones({
               owner: context.repo.owner,
               repo: context.repo.repo,
           });
