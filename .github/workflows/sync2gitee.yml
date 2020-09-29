@@ -1,4 +1,5 @@
 on:
+  push:
   schedule:
     # UTC 17:00 -> CST (China) 1:00
     - cron: '0 17 * * *'
