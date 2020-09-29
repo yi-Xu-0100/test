@@ -21,7 +21,6 @@ jobs:
           });
           console.log('### views begin ###');
           console.log(views);
-          console.log('### views end ###');
           console.log('type of views' + typeof (views));
 
 
