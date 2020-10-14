@@ -1,70 +1,17 @@
-on:
-  push:
+on: push
 name: test
 jobs:
   run:
-    name: get traffic
+    name: Run
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout source code
-      uses: actions/checkout@v2.3.2
 
-    - name: getViews
+    - name: Get time
+      id: info
       uses: actions/github-script@v3.0.0
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
-          const views = await github.repos.getViews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-          });
-          console.log('### views begin ###');
-          console.log(views);
-          console.log('type of views' + typeof (views));
-
-
-    - name: getTopReferrers
-      uses: actions/github-script@v3.0.0
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        result-encoding: string
-        script: |
-          const topreferrers = await github.repos.getTopReferrers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-          });
-          console.log('### topreferrers begin ###');
-          console.log(views);
-          console.log('### topreferrers end ###');
-          console.log('type of topreferrers' + typeof (topreferrers));
-
-    - name: getTopPaths
-      uses: actions/github-script@v3.0.0
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        result-encoding: string
-        script: |
-          const toppaths = await github.repos.getTopPaths({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-          });
-          console.log('### toppaths begin ###');
-          console.log(views);
-          console.log('### toppaths end ###');
-          console.log('type of toppaths' + typeof (toppaths));
-
-    - name: getClones
-      uses: actions/github-script@v3.0.0
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-        result-encoding: string
-        script: |
-          const clones = await github.repos.getClones({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-          });
-          console.log('### clones begin ###');
-          console.log(views);
-          console.log('### clones end ###');
-          console.log('type of clones' + typeof (clones));
+          return new Date(Date.now()).toISOString().replace(/[^0-9]/g, "");
+    
+    - name: echo time
+      run: echo {{ steps.info.outputs.result }}
