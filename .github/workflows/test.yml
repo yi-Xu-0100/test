@@ -14,4 +14,4 @@ jobs:
             return new Date(Date.now()).toISOString().replace(/[^0-9]/g, "");
       
       - name: echo time
-        run: echo {{ steps.info.outputs.result }}
+        run: echo ${{ steps.info.outputs.result }}
