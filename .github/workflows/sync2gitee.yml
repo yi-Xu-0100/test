@@ -29,6 +29,6 @@ jobs:
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
-        static_list: 'MyWiki'
+        static_list: 'MyWiki,${{ steps.info.outputs.result }}'
         force_update: true
         debug: true
