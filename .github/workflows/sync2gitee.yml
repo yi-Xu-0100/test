@@ -1,8 +1,12 @@
 on:
   push:
-  schedule:
-    # UTC 17:00 -> CST (China) 1:00
-    - cron: '0 17 * * *'
+  workflow_dispatch:
+    inputs:
+      black_list:
+        description: 'Repositories excluded in the synchronization action'
+        required: false
+        default: 'MyWiki'
+
 name: sync2gitee
 jobs:
   run:
@@ -22,13 +26,14 @@ jobs:
           return context.repo.repo;
 
     - name: Mirror the Github repos to Gitee
-      uses: Yikun/hub-mirror-action@v0.10
+      uses: Yikun/hub-mirror-action@v0.12
       with:
         src: github/yi-Xu-0100
         dst: gitee/yiXu0100
         dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
+        black_list: '${{ steps.info.outputs.result }},${{ github.event.inputs.black_list }}'
         static_list: 'MyWiki,${{ steps.info.outputs.result }}'
         force_update: true
         debug: true
