@@ -26,7 +26,7 @@ jobs:
           return context.repo.repo;
 
     - name: Mirror the Github repos to Gitee
-      uses: Yikun/hub-mirror-action@v0.12
+      uses: Yikun/hub-mirror-action@v0.13
       with:
         src: github/yi-Xu-0100
         dst: gitee/yiXu0100
