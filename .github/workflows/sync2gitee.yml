@@ -34,6 +34,6 @@ jobs:
         dst_token: ${{ secrets.GITEE_TOKEN }}
         account_type: user
         black_list: '${{ steps.info.outputs.result }},${{ github.event.inputs.black_list }}'
-        static_list: 'MyWiki,${{ steps.info.outputs.result }}'
+        static_list: 'MyWiki,${{ steps.info.outputs.result }},empty-repo'
         force_update: true
         debug: true
