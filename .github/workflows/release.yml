@@ -1,31 +1,32 @@
-name: create-release
 on:
   push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v0.4.1
+    paths:
+      - 'CHANGELOG.md'
+
+name: Create Release
 
 jobs:
-  release:
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      # To use this repository's private action, you must check out the repository
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Generate changelog
-        id: changelog
-        uses: yi-Xu-0100/changelog-generator@patch-1
+
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          firstRelease: tag
+          path: ./CHANGELOG.md
+
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ steps.changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
+          tag_name: v${{ steps.changelog_reader.outputs.version }}
+          release_name: Release v${{ steps.changelog_reader.outputs.version }}
+          body: ${{ steps.changelog_reader.outputs.changes }}
+          prerelease: ${{ steps.changelog_reader.outputs.status == 'prereleased' }}
+          draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
