@@ -63,8 +63,8 @@ jobs:
             await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: '${{ env.HEAD_BRANCH }}'',
-              base: '${{ env.BASE_BRANCH }}'',
+              head: '${{ env.HEAD_BRANCH }}',
+              base: '${{ env.BASE_BRANCH }}',
               title: 'chore(release): :bookmark: release v${{steps.version.outputs.version}}',
               body: '${{ steps.changelog_reader.outputs.changes }}',
               maintainer_can_modify: true,

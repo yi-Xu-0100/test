@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/yi-Xu-0100/test/issues"
   },
-  "homepage": "https://github.com/yi-Xu-0100/test#readme"
+  "homepage": "https://github.com/yi-Xu-0100/test#readme",
+  "dependencies": {
+    "@actions/github": "^4.0.0"
+  }
 }
