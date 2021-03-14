@@ -59,8 +59,8 @@ jobs:
 
       - name: Create pull request
         run: |
-          gh pr create -t '${{steps.version.outputs.title}}'\
-          -b '${{ steps.changelog_reader.outputs.changes }}'\
+          gh pr create -t '${{steps.version.outputs.title}}' \
+          -b "${{ steps.changelog_reader.outputs.changes }}" \
           -B '${{ env.BASE_BRANCH }}' \
-          -H '${{ env.HEAD_BRANCH }}'
+          -H '${{ env.HEAD_BRANCH }}' \
           -a '@me'
