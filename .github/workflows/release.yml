@@ -58,7 +58,7 @@ jobs:
       - name: Create pull request
         uses: actions/github-script@v3.1.0
         with:
-          github-token: ${{ secrets.REPO_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           debug: true
           user-agent: ${{github.repository}}
           script: |
@@ -71,3 +71,4 @@ jobs:
               body: '${{ steps.changelog_reader.outputs.changes }}',
               maintainer_can_modify: true,
             })
+
