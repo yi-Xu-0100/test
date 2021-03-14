@@ -34,6 +34,7 @@ jobs:
         uses: actions/github-script@v3.1.0
         id: version
         with:
+          result-encoding: string
           script: |
             const version = require(`${process.env.GITHUB_WORKSPACE}/package.json`).version;
             core.setOutput('repo', context.repo.repo);
@@ -58,10 +59,21 @@ jobs:
           version: ${{steps.version.outputs.version}}
           path: ./CHANGELOG.md
 
+      - name: Get version from package.json
+        uses: actions/github-script@v3.1.0
+        id: changelog
+        env:
+          CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
+        with:
+          result-encoding: string
+          script:
+            return process.env.CHANGELOG;
+
       - name: Create pull request
         run: |
-          gh pr create -t '${{steps.version.outputs.title}}' \
-          -b "${{ steps.changelog_reader.outputs.changes }}" \
-          -B '${{ env.BASE_BRANCH }}' \
-          -H '${{ env.HEAD_BRANCH }}' \
-          -a '@me'
+          curl \
+            -X POST \
+            -H "authorization: token ${{secrets.GITHUB_TOKEN}}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/yi-Xu-0100/test-repo/pulls \
+            -d '{"head":"prepare-release","base":"main","title":"${{steps.version.outputs.title}}","body":"${{steps.version.outputs.CHANGELOG}}","maintainer_can_modify":true}'
