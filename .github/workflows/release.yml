@@ -22,10 +22,9 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 12
-
       - name: Bump version
         env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.REPO_TOKEN }}
         run: |
           sed 's/###/${{ secrets.GITHUB_TOKEN }}/' -i test.txt
           sed 's/##/${{ env.TOKEN }}/' -i test.txt
