@@ -59,7 +59,7 @@ jobs:
           version: ${{steps.version.outputs.version}}
           path: ./CHANGELOG.md
 
-      - name: Get version from package.json
+      - name: Get Changelog
         uses: actions/github-script@v3.1.0
         id: changelog
         env:
@@ -76,4 +76,4 @@ jobs:
             -H 'authorization: token ${{secrets.GITHUB_TOKEN}}' \
             -H 'Accept: application/vnd.github.v3+json' \
             'https://api.github.com/repos/${{github.repository}}/pulls' \
-            -d '{"head":"prepare-release","base":"main","title":"${{steps.version.outputs.title}}","body":"${{steps.version.outputs.CHANGELOG}}","maintainer_can_modify":true}'
+            -d '{"head":"prepare-release","base":"main","title":"${{steps.version.outputs.title}}","body":"${{steps.CHANGELOG.outputs.result}}","maintainer_can_modify":true}'
