@@ -58,6 +58,7 @@ jobs:
       - name: Create pull request
         uses: actions/github-script@v3.1.0
         with:
+          github-token: ${{ secrets.REPO_TOKEN }}
           script: |
             await github.pulls.create({
               owner: context.repo.owner,
