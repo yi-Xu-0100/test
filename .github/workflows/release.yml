@@ -59,6 +59,8 @@ jobs:
 
       - name: Create pull request
         run: |
+          git config --global user.name '${{github.actor}}'
+          git config --global user.email '${{github.actor}}@users.noreply.github.com'
           gh pr create -t '${{steps.version.outputs.title}}' \
           -b "${{ steps.changelog_reader.outputs.changes }}" \
           -B '${{ env.BASE_BRANCH }}' \
