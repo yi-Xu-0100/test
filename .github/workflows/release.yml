@@ -42,8 +42,6 @@ jobs:
 
       - name: Create commit
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m 'chore(release): :bookmark: release v${{steps.version.outputs.version}}'
           git branch -D '${{ env.HEAD_BRANCH }}' 2>&1 | sed 's/error/warning/'
@@ -59,8 +57,6 @@ jobs:
 
       - name: Create pull request
         run: |
-          git config --global user.name '${{github.actor}}'
-          git config --global user.email '${{github.actor}}@users.noreply.github.com'
           gh pr create -t '${{steps.version.outputs.title}}' \
           -b "${{ steps.changelog_reader.outputs.changes }}" \
           -B '${{ env.BASE_BRANCH }}' \
