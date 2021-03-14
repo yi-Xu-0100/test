@@ -7,6 +7,7 @@ on:
 env:
   BASE_BRANCH: 'main'
   HEAD_BRANCH: 'prepare-release'
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
         run: |
           npx standard-version --skip.commit --skip.tag
           sed 's/^### \[/## [/' -i CHANGELOG.md
-          npx prettier --write CHANGELOG.md  --prose-wrap never --ignore-path ./gitignore
+          npx prettier --write 'CHANGELOG.md'  --prose-wrap never --ignore-path './gitignore'
 
       - name: Get version from package.json
         uses: actions/github-script@v3.1.0
@@ -37,16 +38,17 @@ jobs:
             const version = require(`${process.env.GITHUB_WORKSPACE}/package.json`).version;
             core.setOutput('repo', context.repo.repo);
             core.setOutput('version', version);
+            core.setOutput('title', 'chore(release): :bookmark: release v' + version);
 
       - name: Create commit
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "chore(release): :bookmark: release v${{steps.version.outputs.version}}"
-          git branch -D ${{ env.HEAD_BRANCH }} || (echo "branch ${{ env.HEAD_BRANCH }} not found" && exit 0)
-          git checkout -b ${{ env.HEAD_BRANCH }}
-          git push -f "https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git"
+          git commit -m 'chore(release): :bookmark: release v${{steps.version.outputs.version}}'
+          git branch -D '${{ env.HEAD_BRANCH }}' 2>&1 | sed 's/error/warning/'
+          git checkout -b '${{ env.HEAD_BRANCH }}'
+          git push -f 'https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git'
 
       - name: Get Changelog Entry
         id: changelog_reader
@@ -56,19 +58,9 @@ jobs:
           path: ./CHANGELOG.md
 
       - name: Create pull request
-        uses: actions/github-script@v3.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          debug: truen 
-          user-agent: ${{github.repository}}
-          script: |
-            github.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: '${{ env.HEAD_BRANCH }}',
-              base: '${{ env.BASE_BRANCH }}',
-              title: 'chore(release): :bookmark: release v${{steps.version.outputs.version}}',
-              body: '${{ steps.changelog_reader.outputs.changes }}',
-              maintainer_can_modify: true,
-            })
-
+        run: |
+          gh pr create -t '${{steps.version.outputs.title}}'\
+          -b '${{ steps.changelog_reader.outputs.changes }}'\
+          -B '${{ env.BASE_BRANCH }}' \
+          -H '${{ env.HEAD_BRANCH }}'
+          -a '@me'
