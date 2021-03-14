@@ -31,11 +31,3 @@ jobs:
       
       - name: echo time
         run: echo ${{ env.ACTION_NAME }}
-
-      
-      - name: test
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          sed -i 's/###/${{ secrets.GITHUB_TOKEN }}/' test.txt
-          sed -i 's/##/${{ env.TOKEN }}/' test.txt

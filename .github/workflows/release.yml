@@ -24,7 +24,11 @@ jobs:
           node-version: 12
 
       - name: Bump version
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          sed 's/###/${{ secrets.GITHUB_TOKEN }}/' -i test.txt
+          sed 's/##/${{ env.TOKEN }}/' -i test.txt
           npx standard-version --skip.commit --skip.tag
           sed 's/^### \[/## [/' -i CHANGELOG.md
           npx prettier --write CHANGELOG.md  --prose-wrap never --ignore-path ./gitignore
