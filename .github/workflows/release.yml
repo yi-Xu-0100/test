@@ -48,7 +48,8 @@ jobs:
           git commit -m 'chore(release): :bookmark: release v${{steps.version.outputs.version}}'
           git branch -D '${{ env.HEAD_BRANCH }}' 2>&1 | sed 's/error/warning/'
           git checkout -b '${{ env.HEAD_BRANCH }}'
-          git push -f 'https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git'
+          git remote set-url origin 'https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git'
+          git push -f -u origin '${{ env.HEAD_BRANCH }}'
 
       - name: Get Changelog Entry
         id: changelog_reader
@@ -63,5 +64,4 @@ jobs:
           -b "${{ steps.changelog_reader.outputs.changes }}" \
           -B '${{ env.BASE_BRANCH }}' \
           -H '${{ env.HEAD_BRANCH }}' \
-          -a '@me' \
-          -R ${{github.repository}} \
+          -a '@me'
