@@ -5,7 +5,7 @@ async function run() {
   // The YML workflow will need to set myToken with the GitHub Secret Token
   // myToken: ${{ secrets.GITHUB_TOKEN }}
   // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-  token='v1.2784c3989f8e1cec328cf6624c1c9cc26b9b2288'
+  token='***'
   console.log(token)
   const github = getOctokit(token);
 

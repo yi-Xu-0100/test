@@ -59,10 +59,10 @@ jobs:
         uses: actions/github-script@v3.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          debug: true
+          debug: truen 
           user-agent: ${{github.repository}}
           script: |
-            await github.pulls.create({
+            github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               head: '${{ env.HEAD_BRANCH }}',
