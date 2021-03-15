@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/yi-Xu-0100/test/compare/v1.16.0...v1.2.0) (2021-03-15)
+
+### Features
+
+- **actions:** ⚡️ add cache for actions ([434bc2c](https://github.com/yi-Xu-0100/test/commit/434bc2c57c915630f5583e5573798e6e1fdf94b4))
+- **actions:** ⚡️ test gh cli ([f32a059](https://github.com/yi-Xu-0100/test/commit/f32a05979f434b5427f9e7ebf8bd2fdf39bdae29))
+
+### Bug Fixes
+
+- **actions:** :bug: fix name of steps ([16d40b6](https://github.com/yi-Xu-0100/test/commit/16d40b69f4a883d7ab8407902251c500b0589157))
+- **actions:** ⚡️ fix maintainer_can_modify ([c50ebb1](https://github.com/yi-Xu-0100/test/commit/c50ebb17bf9eb160a8e44c76a16ae2e619db5749))
+- **actions:** 🎨 test update pr ([789511d](https://github.com/yi-Xu-0100/test/commit/789511d8d682e2c1bacc3a5f29267dc3f651fba0))
+- **actions:** 🐛 add token for update ([d7522b3](https://github.com/yi-Xu-0100/test/commit/d7522b35fc74690f81ebabe5a4dc4ee1ab4f48fa))
+- **actions:** 🐛 fix auth again ([da341a9](https://github.com/yi-Xu-0100/test/commit/da341a9ba8142e7410d61815544ded0ea78f7598))
+- **actions:** 🐛 fix json type ([33aa52e](https://github.com/yi-Xu-0100/test/commit/33aa52e4eadb4822f895f01e1bb24ebb92fa9222))
+- **actions:** 🐛 fix missing quote ([c0c2de3](https://github.com/yi-Xu-0100/test/commit/c0c2de3a3ba276b3edd62770d2b48fb291fa23aa))
+- **actions:** 🐛 fix no change log ([b923b58](https://github.com/yi-Xu-0100/test/commit/b923b5861fa5803068d1ec68a24a31b0e9beac53))
+- **actions:** 🐛 fix no prepare ([ae80c42](https://github.com/yi-Xu-0100/test/commit/ae80c4236dc55867ffc1961e353e1a72d2e3f54c))
+- **actions:** 🐛 fix no release ([3802074](https://github.com/yi-Xu-0100/test/commit/38020749964cddfe2119aa39effcf4014a460ed0))
+- **actions:** 🐛 fix not found branch ([25b4e19](https://github.com/yi-Xu-0100/test/commit/25b4e1926a26dca753a2b6bb8627881f47941428))
+- **actions:** 🐛 fix the user name ([34ca055](https://github.com/yi-Xu-0100/test/commit/34ca055c3e53e400369a2e7c70717f6411b49b25))
+- **actions:** 🐛 test current repo ([718ae40](https://github.com/yi-Xu-0100/test/commit/718ae40d393d15b0ccc259b1e5771a52b3e6d6b9))
+- **actions:** 🐛 test repo name for gh pr ([5586126](https://github.com/yi-Xu-0100/test/commit/5586126dbe7dd471ac50a6d0403871fcf0bae89d))
+- **actions:** 🐛 test the remote url ([e2256e6](https://github.com/yi-Xu-0100/test/commit/e2256e6f6ec4e67674287703b446b55d3e8b3da1))
+- **actions:** 🐛 try to fix the auth ([d5fbfd2](https://github.com/yi-Xu-0100/test/commit/d5fbfd2ee1c93c1d8ae14c5a60a8769a82dd80c6))
+- **actions:** 🐛 try to fix the error ([62b70a0](https://github.com/yi-Xu-0100/test/commit/62b70a0c85449683624362a843b2ba9f04002ed9))
+- **actions:** 🐛 try to fix the Invalid token ([28e50f8](https://github.com/yi-Xu-0100/test/commit/28e50f85d5158a33569715640d070ac9007b6ecc))
+- **actions:** 🐛 use repo token ([1705220](https://github.com/yi-Xu-0100/test/commit/17052206f6936f9ef376bbb5cb62362389afcd30))
+- **actions:** delete token ([57dd5be](https://github.com/yi-Xu-0100/test/commit/57dd5bec8526d3b90aced3f3a5eb8ed9dd0b88f8))
+- 🐛 fix token ([182b492](https://github.com/yi-Xu-0100/test/commit/182b492202f6959ac6f16e1c24bb6e525d51e42f))
+- fix push error ([62458bf](https://github.com/yi-Xu-0100/test/commit/62458bf2fede7fe842cd9176cec6920a339469d8))
+
 ## [1.1.0](https://github.com/yi-Xu-0100/test/compare/v1.16.0...v1.1.0) (2021-03-15)
 
 ### Features
