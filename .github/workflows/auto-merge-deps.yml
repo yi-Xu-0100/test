@@ -24,7 +24,7 @@ jobs:
       - name: Check PR context
         id: check
         run: |
-          gh pr checkout ${{ github.event.pull_request.number }}"
+          gh pr checkout "${{ github.event.pull_request.number }}"
           echo "${{ github.event.pull_request.title }}" | \
           sed -e "s/^chore.*: \(.*\)/\1/" | \
           sed -e "s/^/chore(deps): ⬆️ /" | \
