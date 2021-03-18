@@ -1,0 +1,33 @@
+on: push
+name: test
+env:
+  ACTION_NAME: release-please-action
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get time
+        id: info
+        uses: actions/github-script@v3.1
+        with:
+          result-encoding: string
+          script: |
+            return new Date(Date.now()).toISOString().replace(/[^0-9]/g, "");
+      
+      - name: echo time
+        run: echo ${{ env.ACTION_NAME }}
+  run2:
+    name: Run2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get time
+        id: info
+        uses: actions/github-script@v3.1
+        with:
+          result-encoding: string
+          script: |
+            return new Date(Date.now()).toISOString().replace(/[^0-9]/g, "");
+      
+      - name: echo time
+        run: echo ${{ env.ACTION_NAME }}

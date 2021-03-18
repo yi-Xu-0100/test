@@ -1,0 +1,38 @@
+on:
+  workflow_dispatch:
+    inputs:
+      black_list:
+        description: 'Repositories excluded in the synchronization action'
+        required: false
+        default: 'MyWiki'
+
+name: sync2gitee
+jobs:
+  run:
+    name: Sync GitHub to Gitee
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2.3.2
+
+    - name: 👀 Git current repository name
+      id: info
+      uses: actions/github-script@v3.1
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        result-encoding: string
+        script: |
+          return context.repo.repo;
+
+    - name: ➡️ Mirror the Github repos to Gitee
+      uses: Yikun/hub-mirror-action@v1.0
+      with:
+        src: github/yi-Xu-0100
+        dst: gitee/yiXu0100
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        account_type: user
+        black_list: '${{ steps.info.outputs.result }},${{ github.event.inputs.black_list }}'
+        static_list: 'MyWiki,${{ steps.info.outputs.result }},empty-repo'
+        force_update: true
+        debug: true
