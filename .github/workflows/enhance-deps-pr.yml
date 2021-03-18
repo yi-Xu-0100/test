@@ -1,4 +1,4 @@
-name: 'auto merge deps'
+name: 'enhance-deps-PR'
 
 on:
   pull_request_target:
@@ -9,7 +9,7 @@ env:
 
 jobs:
   run:
-    name: auto merge deps
+    name: enhance deps PR
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'auto-update-deps')
     steps:
@@ -24,7 +24,6 @@ jobs:
       - name: Check PR context
         id: check
         run: |
-          gh pr checkout "${{ github.event.pull_request.number }}"
           echo "${{ github.event.pull_request.title }}" | \
           sed -e "s/^chore.*: \(.*\)/\1/" | \
           sed -e "s/^/chore(deps): ⬆️ /" | \
@@ -39,10 +38,13 @@ jobs:
         run: |
           gh pr edit ${{ env.number }} --title "${{ env.title }}"
 
-      - name: Auto merge dependabot PR
+      - name: Enhance PR commit message
         env:
           number: ${{ github.event.pull_request.number }}
           title: ${{ steps.check.outputs.title }}
-          body: ${{ steps.check.outputs.title }}
+          body: ${{ steps.check.outputs.body }}
         run: |
-          gh pr merge ${{ env.number }} -s "${{ env.title }}" -b "${{ env.title }}"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit --amend -m "${{ env.title }}" -m "${{ env.body }}"
+          git push -f
