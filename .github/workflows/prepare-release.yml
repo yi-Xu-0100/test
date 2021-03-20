@@ -1,4 +1,4 @@
-name: prepare release
+name: 'prepare release'
 on:
   workflow_run:
     workflows: ["release"]
@@ -83,23 +83,23 @@ jobs:
       - name: Create pull request in github script
         id: script
         uses: actions/github-script@v3.1.0
-          with:
-            result-encoding: string
-            script: |
-              try {
-                await github.pulls.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  head: ${{ env.HEAD_BRANCH }},
-                  base: ${{ env.BASE_BRANCH }},
-                  title: 'chore(release): :bookmark: release v${{steps.version.outputs.version}}',
-                  body: '${{ steps.changelog_reader.outputs.changes }}',
-                  maintainer_can_modify: true,
-                })
-              } catch (e) {
-                core.warning(`Warning: ${e}`);
-                return false;
-              }
+        with:
+          result-encoding: string
+          script: |
+            try {
+              await github.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: ${{ env.HEAD_BRANCH }},
+                base: ${{ env.BASE_BRANCH }},
+                title: 'chore(release): :bookmark: release v${{steps.version.outputs.version}}',
+                body: '${{ steps.changelog_reader.outputs.changes }}',
+                maintainer_can_modify: true,
+              })
+            } catch (e) {
+              core.warning(`Warning: ${e}`);
+              return false;
+            }
 
       - name: Create pull request
         if: ${{ steps.script.outputs.result == 'false' }}
