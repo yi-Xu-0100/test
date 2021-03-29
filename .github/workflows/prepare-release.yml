@@ -112,7 +112,7 @@ jobs:
             -d '{"head":"${{ env.HEAD_BRANCH }}","base":"${{ env.BASE_BRANCH }}","title":"${{steps.version.outputs.title}}","body":${{steps.CHANGELOG.outputs.result}},"maintainer_can_modify":true}'
 
       - name: Find pull request
-        uses: juliangruber/find-pull-request-action@v1.4.0
+        uses: juliangruber/find-pull-request-action@v1.5.0
         id: find-pull-request
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
