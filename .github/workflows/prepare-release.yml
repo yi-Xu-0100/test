@@ -1,9 +1,11 @@
 name: 'prepare release'
+
 on:
+  workflow_dispatch:
   workflow_run:
-    workflows: ["release"]
+    workflows: ['release']
     branches: [main]
-    types: 
+    types:
       - completed
   push:
     branches:
@@ -38,6 +40,7 @@ jobs:
 
       - name: Bump version
         run: |
+          git tag | grep -P 'v\d+\.\d+\.\d+-beta.\d+' -o | xargs git tag -d
           npx standard-version --skip.commit --skip.tag
           sed 's/^### \[/## [/' -i CHANGELOG.md
           npx prettier --write 'CHANGELOG.md'  --prose-wrap never --ignore-path './gitignore'
@@ -51,14 +54,14 @@ jobs:
             const version = require(`${process.env.GITHUB_WORKSPACE}/package.json`).version;
             core.setOutput('repo', context.repo.repo);
             core.setOutput('version', version);
-            core.setOutput('title', 'chore(release): :bookmark: release v' + version);
+            core.setOutput('title', 'chore(release): 🔖 release v' + version);
 
       - name: Create commit
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m 'chore(release): :bookmark: release v${{steps.version.outputs.version}}'
+          git commit -m 'chore(release): 🔖 release v${{steps.version.outputs.version}}'
           git branch -D '${{ env.HEAD_BRANCH }}' 2>&1 | sed 's/error/warning/'
           git checkout -b '${{ env.HEAD_BRANCH }}'
           git remote set-url origin 'https://x-access-token:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git'
@@ -77,46 +80,15 @@ jobs:
         env:
           CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
         with:
-          script:
-            return process.env.CHANGELOG;
-
-      - name: Create pull request in github script
-        id: script
-        uses: actions/github-script@v3.1.0
-        with:
-          result-encoding: string
-          script: |
-            try {
-              await github.pulls.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                head: ${{ env.HEAD_BRANCH }},
-                base: ${{ env.BASE_BRANCH }},
-                title: 'chore(release): :bookmark: release v${{steps.version.outputs.version}}',
-                body: '${{ steps.changelog_reader.outputs.changes }}',
-                maintainer_can_modify: true,
-              })
-            } catch (e) {
-              core.warning(`Warning: ${e}`);
-              return false;
-            }
-
-      - name: Create pull request
-        if: ${{ steps.script.outputs.result == 'false' }}
-        run: |
-          curl \
-            -X POST \
-            -H 'authorization: token ${{secrets.GITHUB_TOKEN}}' \
-            -H 'Accept: application/vnd.github.v3+json' \
-            'https://api.github.com/repos/${{github.repository}}/pulls' \
-            -d '{"head":"${{ env.HEAD_BRANCH }}","base":"${{ env.BASE_BRANCH }}","title":"${{steps.version.outputs.title}}","body":${{steps.CHANGELOG.outputs.result}},"maintainer_can_modify":true}'
+          script: return process.env.CHANGELOG;
 
       - name: Find pull request
         uses: juliangruber/find-pull-request-action@v1.5.0
         id: find-pull-request
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ env.HEAD_BRANCH }}
+          state: all
+          sort: updated
 
       - name: Update pull request
         env:
@@ -127,4 +99,4 @@ jobs:
             -H 'authorization: token ${{secrets.GITHUB_TOKEN}}' \
             -H 'Accept: application/vnd.github.v3+json' \
             'https://api.github.com/repos/${{github.repository}}/pulls/${{ env.NUMBER }}' \
-            -d '{"base":"${{ env.BASE_BRANCH }}","title":"${{steps.version.outputs.title}}","body":${{steps.CHANGELOG.outputs.result}}}'
+            -d '{"base":"${{ env.BASE_BRANCH }}","title":"${{steps.version.outputs.title}}","body":${{steps.CHANGELOG.outputs.result}}},"state":"open"'
