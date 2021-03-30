@@ -87,35 +87,6 @@ jobs:
         id: find-pull-request
         with:
           branch: ${{ env.HEAD_BRANCH }}
-          state: all
-          sort: updated
-
-      - name: Check pull request
-        id: check-pull-request
-        env:
-          NUMBER: ${{ steps.find-pull-request.outputs.number }}
-        run: |
-          curl \
-            -Is\
-            -w "%{http_code}" \
-            -o /dev/null \
-            -H 'authorization: token ${{secrets.GITHUB_TOKEN}}' \
-            -H 'Accept: application/vnd.github.v3+json' \
-            'https://api.github.com/repos/${{github.repository}}/pulls/${{ env.NUMBER }}/merge' | \
-          xargs echo "::set-output name=code::$1"
-
-      - name: Reopen pull request
-        if: ${{ steps.check-pull-request.outputs.code == ' 204' }}
-        env:
-          NUMBER: ${{ steps.find-pull-request.outputs.number }}
-        run: |
-          curl \
-            -X PATCH \
-            -H 'authorization: token ${{secrets.GITHUB_TOKEN}}' \
-            -H 'Accept: application/vnd.github.v3+json' \
-            'https://api.github.com/repos/${{github.repository}}/pulls/${{ env.NUMBER }}' \
-            -d '{"state":"open"}'
-
 
       - name: Update pull request
         env:
