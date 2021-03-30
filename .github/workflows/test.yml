@@ -1,4 +1,9 @@
-on: push
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - index.js
 name: test
 env:
   ACTION_NAME: release-please-action
