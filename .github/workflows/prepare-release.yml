@@ -82,6 +82,22 @@ jobs:
         with:
           script: return process.env.CHANGELOG;
 
+      - name: create-pull-request
+        uses: actions/github-script@v3.1.1
+        env:
+          changelog: ${{ steps.changelog_reader.outputs.changes }}
+        with:
+          script: |
+            const { changelog } = process.env;
+            await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: 'prepare-release',
+              base: 'main',
+              title: 'test create',
+              body: `${changelog}`
+            });
+
       - name: Find pull request
         uses: juliangruber/find-pull-request-action@v1.5.0
         id: find-pull-request
