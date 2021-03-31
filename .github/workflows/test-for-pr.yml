@@ -37,7 +37,6 @@ jobs:
         uses: actions/github-script@v3.1.1
         with:
           script: |
-            try{
             await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -46,8 +45,6 @@ jobs:
               title: 'test create',
               body: `${{ steps.changelog_reader.outputs.changes }}`
             });
-
-            }
       - name: update-pull-request
         if: ${{ always() }}
         uses: actions/github-script@v3.1.1
