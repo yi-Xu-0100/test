@@ -17,8 +17,8 @@ jobs:
         with:
           script: |
             const {data: pullRequest } = await github.pulls.get({
-              owner: context.owner,
-              repo: context.owner,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               pull_number: 15,
             });
             core.info(pullRequest);
@@ -29,8 +29,8 @@ jobs:
         with:
           script: |
             await github.pulls.create({
-              owner: context.owner,
-              repo: context.owner,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               head: 'prepare-release',
               base: 'main',
             });
@@ -41,8 +41,8 @@ jobs:
         with:
           script: |
             await github.pulls.update({
-              owner: context.owner,
-              repo: context.owner,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               pull_number: 15,
               head: 'prepare-release',
               base: 'main',
