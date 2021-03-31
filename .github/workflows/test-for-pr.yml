@@ -35,20 +35,19 @@ jobs:
       - name: create-pull-request
         if: ${{ always() }}
         uses: actions/github-script@v3.1.1
-        env:
-          changelog: ${{ steps.changelog_reader.outputs.changes }}
         with:
           script: |
-            const { changelog } = process.env
+            try{
             await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               head: 'prepare-release',
               base: 'main',
               title: 'test create',
-              body: `${changelog}`
+              body: `${{ steps.changelog_reader.outputs.changes }}`
             });
 
+            }
       - name: update-pull-request
         if: ${{ always() }}
         uses: actions/github-script@v3.1.1
