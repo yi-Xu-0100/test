@@ -16,19 +16,19 @@ jobs:
         uses: actions/github-script@v3.1.1
         with:
           script: |
-            const result = await github.rest.pulls.get({
+            const {data: pullRequest } = await github.pulls.get({
               owner: context.owner,
               repo: context.owner,
               pull_number: 15,
             });
-            core.info(JSON.straightly);
+            core.info(pullRequest);
 
       - name: create-pull-request
         if: ${{ always() }}
         uses: actions/github-script@v3.1.1
         with:
           script: |
-            await github.rest.pulls.create({
+            await github.pulls.create({
               owner: context.owner,
               repo: context.owner,
               head: 'prepare-release',
@@ -40,7 +40,7 @@ jobs:
         uses: actions/github-script@v3.1.1
         with:
           script: |
-            await github.rest.pulls.update({
+            await github.pulls.update({
               owner: context.owner,
               repo: context.owner,
               pull_number: 15,
