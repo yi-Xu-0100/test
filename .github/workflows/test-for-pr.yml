@@ -33,6 +33,7 @@ jobs:
               repo: context.repo.repo,
               head: 'prepare-release',
               base: 'main',
+              title: 'test create'
             });
 
       - name: update-pull-request
