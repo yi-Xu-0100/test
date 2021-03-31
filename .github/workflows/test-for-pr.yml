@@ -1,0 +1,51 @@
+name: 'test for pr'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - index.js
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get-pull-request
+        uses: actions/github-script@v3.1.1
+        with:
+          script: |
+            const result = await github.rest.pulls.get({
+              owner: context.owner,
+              repo: context.owner,
+              pull_number: 15,
+            });
+            core.info(JSON.straightly);
+
+      - name: create-pull-request
+        if: ${{ always() }}
+        uses: actions/github-script@v3.1.1
+        with:
+          script: |
+            await github.rest.pulls.create({
+              owner: context.owner,
+              repo: context.owner,
+              head: 'prepare-release',
+              base: 'main',
+            });
+
+      - name: update-pull-request
+        if: ${{ always() }}
+        uses: actions/github-script@v3.1.1
+        with:
+          script: |
+            await github.rest.pulls.update({
+              owner: context.owner,
+              repo: context.owner,
+              pull_number: 15,
+              head: 'prepare-release',
+              base: 'main',
+              body: 'test update body.'
+            });
+
