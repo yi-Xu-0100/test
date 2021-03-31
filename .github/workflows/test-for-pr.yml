@@ -34,7 +34,7 @@ jobs:
 
       - name: create-pull-request
         if: ${{ always() }}
-        uses: actions/github-script@v3.1.1
+        uses: actions/github-script@v3.1.0
         with:
           script: |
             await github.pulls.create({
