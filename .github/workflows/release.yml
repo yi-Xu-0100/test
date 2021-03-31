@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get version from package.json
-        uses: actions/github-script@v3.1.0
+        uses: actions/github-script@v3.1.1
         id: version
         with:
           result-encoding: string
