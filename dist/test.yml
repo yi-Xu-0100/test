@@ -1,5 +1,5 @@
 on:
-  push:
+  workflow_dispatch:
 name: test
 jobs:
   run:
@@ -15,6 +15,10 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         result-encoding: string
         script: |
+          throw new TypeError(
+            `Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` +
+            `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
+          )
           const views = await github.repos.getViews({
               owner: context.repo.owner,
               repo: context.repo.repo,
