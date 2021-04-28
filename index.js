@@ -18,6 +18,6 @@ async function run() {
 
 if (require.main === module) {
   run().catch(err => {
-    setFailed(`Action failed: ${err.message}`);
+    core.setFailed(`Action failed: ${err.message}`);
   });
 }
