@@ -16,4 +16,8 @@ async function run() {
   core.setOutput('booleanInput', var1);
 }
 
-run();
+if (require.main === module) {
+  run().catch(err => {
+    setFailed(`Action failed: ${err.message}`);
+  });
+}
