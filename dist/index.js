@@ -478,7 +478,7 @@ async function run() {
 
 if (require.main === require.cache[eval('__filename')]) {
   run().catch(err => {
-    setFailed(`Action failed: ${err.message}`);
+    core.setFailed(`Action failed: ${err.message}`);
   });
 }
 
