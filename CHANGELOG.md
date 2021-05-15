@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.2](https://github.com/yi-Xu-0100/test/compare/v1.2.1...v1.2.2) (2021-05-15)
+
+### Bug Fixes
+
+- **actions:** 🐛 fix core function ([0f0d6d3](https://github.com/yi-Xu-0100/test/commit/0f0d6d3cf6134cbfc441d4fce293fc08b986ffe1))
+- **actions:** 🐛 fix uncatched error ([a6d8e07](https://github.com/yi-Xu-0100/test/commit/a6d8e071dc2102431dc744ec86cef7afa0b8d08c))
+- **actions:** 🐛 rebuild test action ([1ba02c7](https://github.com/yi-Xu-0100/test/commit/1ba02c7cd535598fd68edcc3c58dbe798298d034))
+- fix token ([ef0cb85](https://github.com/yi-Xu-0100/test/commit/ef0cb853574a5f57d6f2104ccc7a15b1228bbd41))
+
 ## [1.2.1](https://github.com/yi-Xu-0100/test/compare/v1.2.0...v1.2.1) (2021-03-30)
 
 ### Bug Fixes
