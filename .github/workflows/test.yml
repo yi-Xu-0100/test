@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Get time
         id: info
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1
         with:
           result-encoding: string
           script: |
@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Get time
         id: info
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1
         with:
           result-encoding: string
           script: |

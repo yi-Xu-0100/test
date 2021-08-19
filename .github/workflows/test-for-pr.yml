@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: get-pull-request
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1
         with:
           script: |
             const {data: pullRequest } = await github.pulls.get({
@@ -34,7 +34,7 @@ jobs:
 
       - name: create-pull-request
         if: ${{ always() }}
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1
         with:
           script: |
             await github.pulls.create({
@@ -47,7 +47,7 @@ jobs:
             });
       - name: update-pull-request
         if: ${{ always() }}
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1
         with:
           script: |
             await github.pulls.update({
